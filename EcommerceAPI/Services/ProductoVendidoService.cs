@@ -8,51 +8,49 @@ using System.Threading.Tasks;
 
 namespace store_app.Services
 {
-    public static class ProductoVendidoService
+    public  class ProductoVendidoService
     {
+        private EcommerceContext context;
+        public ProductoVendidoService( EcommerceContext ctx)
+        {
+            this.context = ctx;
+        }
+        public ProductoVendido Obtener(int id) {
+            
+             return this.context.ProductoVendidos.Where(u => u.Id == id).FirstOrDefault();
+            
+        }
+        public  List<ProductoVendido> Listar() {
+          
+              return this.context.ProductoVendidos.ToList();
+           
+        }
+        public void Crear(ProductoVendido productoVendido) {
+         
+                this.context.ProductoVendidos.Add(productoVendido);
+                this.context.SaveChanges();
+          
+        }
 
-        public static ProductoVendido Obtener(int id) {
-            using (EcommerceContext context = new EcommerceContext())
-            {
-                return context.ProductoVendidos.Where(u => u.Id == id).FirstOrDefault();
-            }
-        }
-        public static List<ProductoVendido> Listar() {
-            using (EcommerceContext context = new()) {
-                return context.ProductoVendidos.ToList();
-            }
-        }
-        public static void Crear(ProductoVendido productoVendido) {
-            using   (EcommerceContext context = new EcommerceContext())
-            {
-                context.ProductoVendidos.Add(productoVendido);
-                context.SaveChanges();
-            }
-        }
-
-        public static bool Modificar(ProductoVendido productoVendido) { 
-           using(EcommerceContext context = new EcommerceContext())
-            {
+        public bool Modificar(ProductoVendido productoVendido) { 
+          
                 if (productoVendido == null)return false;
-                context.ProductoVendidos.Update(productoVendido);
-                context.SaveChanges();
+                this.context.ProductoVendidos.Update(productoVendido);
+                this.context.SaveChanges();
                 return true;
-            }
+            
         }
 
-        public static bool Eliminar(int id) { 
-            using(EcommerceContext context = new())
-            {
-
+        public bool Eliminar(int id) { 
+       
                 if (Obtener(id) is not null)
                 {
-                    context.ProductoVendidos.Remove(Obtener(id));
-                    context.SaveChanges();
+                    this.context.ProductoVendidos.Remove(Obtener(id));
+                    this.context.SaveChanges();
                     return true;
                 }
                 else return false;
-            }
-
+       
         }
     }
 }

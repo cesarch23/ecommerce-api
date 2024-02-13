@@ -1,4 +1,5 @@
-﻿using EcommerceAPI.Models;
+﻿
+using EcommerceAPI.Models;
 using EcommerceAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -11,12 +12,16 @@ namespace EcommerceAPI.Controllers
     public class ProductoController : Controller
     {
         private ProductoServicio productoServicio;
-        public ProductoController( ProductoServicio productService){
+        public ProductoController( 
+            ProductoServicio productService
+ 
+            ){
             productoServicio = productService;
+   
          }
         [HttpGet]
         public List<Producto> productList()
-        {
+        {   
             return this.productoServicio.Listar();
         }
     }

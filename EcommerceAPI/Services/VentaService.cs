@@ -9,53 +9,52 @@ using System.Threading.Tasks;
 
 namespace store_app.Services
 {
-    public static class VentaService
+    public  class VentaService
     {
+        private EcommerceContext context;
+        public VentaService(EcommerceContext ctx) {
+            this.context = ctx;
+        }
 
-        public static Venta Obtener(int id) {
-            using (EcommerceContext context = new())
-            {
-                return context.Venta.Find(id);
-            }
+        public Venta Obtener(int id) {
+          
+                return this.context.Venta.Find(id);
+            
         }
-        public static List<Venta> Listar() {
-            using (EcommerceContext context = new())
-            {
-                return context.Venta.ToList();
-            }
+        public  List<Venta> Listar() {
+            
+                return this.context.Venta.ToList();
+           
         }
-        public static void Crear(Venta venta) {
-            using (EcommerceContext context = new())
-            {
-                context.Venta.Add(venta);
-                context.SaveChanges();
-            }
+        public void Crear(Venta venta) {
+            
+                this.context.Venta.Add(venta);
+                this.context.SaveChanges();
+            
         }
-        public static bool Modificar(Venta v)
+        public bool Modificar(Venta v)
         {
-            using (EcommerceContext ctx = new())
-            {
+            
                 if (Obtener(v.Id) is not null)
                 {
-                    ctx.Venta.Update(v);
-                    ctx.SaveChanges();
+                    this.context.Venta.Update(v);
+                    this.context.SaveChanges();
                     return true;
                 }
                 else return false;
-            }
+            
         }
-        public static bool Delete(int id) {
-            using (EcommerceContext ctx = new())
-            {
+        public bool Delete(int id) {
+            
                 Venta v = Obtener(id);
                 if (v is not null)
                 {
-                    ctx.Venta.Remove(v);
-                    ctx.SaveChanges();
+                    this.context.Venta.Remove(v);
+                    this.context.SaveChanges();
                     return true;
                 }
                 else return false;
-            }
+             
         }   
  
     }

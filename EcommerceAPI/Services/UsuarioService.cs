@@ -9,50 +9,49 @@ using System.Threading.Tasks;
 
 namespace store_app.Services
 {
-    public static class UsuarioService
+    public class UsuarioService
     {
-        public static Usuario Obtener(int id) { 
-            using(EcommerceContext context = new())
-            {
-                return context.Usuarios.Find(id);
-            }
+        private readonly EcommerceContext context;
+        public UsuarioService( EcommerceContext ctx ) {
+            this.context = ctx;
         }
-        public static List<Usuario> Listar() {
-            using(EcommerceContext context = new())
-            {
-                return context.Usuarios.ToList();
-            }
+        public  Usuario Obtener(int id) { 
+           
+                return this.context.Usuarios.Find(id);
+          
         }
-        public static void Crear(Usuario u) {
-            using(EcommerceContext context = new())
-            {
-                context.Usuarios.Add(u);
-                context.SaveChanges();
-            }
+        public  List<Usuario> Listar() {
+           
+                return  this.context.Usuarios.ToList();
+           
         }
-        public static bool Modificar(Usuario u) {
-            using(EcommerceContext ctx = new())
-            {
+        public  void Crear(Usuario u) {
+            
+                this.context.Usuarios.Add(u);
+                this.context.SaveChanges();
+            
+        }
+        public bool Modificar(Usuario u) {
+          
                 if(Obtener(u.Id) is not null) {
-                    ctx.Usuarios.Update(u);
-                    ctx.SaveChanges();
-                    return true;
-                }
-            else return false;
-            }
-        }
-        public static bool Eliminar(int id) {
-            using (EcommerceContext ctx = new())
-            {
-                Usuario u = Obtener(id);
-                if (u is not null)
-                {
-                    ctx.Usuarios.Remove(u);
-                    ctx.SaveChanges();
+                    this.context.Usuarios.Update(u);
+                    this.context.SaveChanges();
                     return true;
                 }
                 else return false;
-            }
+            
+        }
+        public  bool Eliminar(int id) {
+          
+                Usuario u = Obtener(id);
+                if (u is not null)
+                {
+                    this.context.Usuarios.Remove(u);
+                    this.context.SaveChanges();
+                    return true;
+                }
+                else return false;
+           
         } 
 
        
